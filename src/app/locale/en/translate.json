@@ -1,5 +1,9 @@
 {
   "translation": {
-    "header": "Header"
+    "/": "Home Page",
+    "web_page": "Layout & style",
+    "form_page": "Form Management",
+    "en": "English",
+    "th": "Thai"
   }
 }

@@ -1,3 +1,22 @@
 .header {
-  background-color: #14a2f9;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #00000050;
+  height: 10vh;
+}
+
+.content {
+  height: 90vh;
+}
+
+.title {
+  margin: 0;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }

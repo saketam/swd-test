@@ -1,37 +1,68 @@
-import { Layout, Menu } from 'antd'
+import './style.scss'
+
+import { DownOutlined } from '@ant-design/icons'
+import { Button, ButtonProps, Dropdown, Layout, Space, Typography } from 'antd'
+import type { MenuProps } from 'antd'
+import { useRouter } from 'next/router'
 import { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
+
 const { Header, Content } = Layout
-import './style.scss'
 
 type DefaultLayoutProps = { children: ReactNode }
 
 const AppLayout = ({ children }: DefaultLayoutProps) => {
   const { t, i18n } = useTranslation()
+  const router = useRouter()
 
-  const handleChangeLanguage = (lang: string) => () => {
-    i18n.changeLanguage(lang)
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    i18n.changeLanguage(e.key)
   }
+
+  const handleHomeClick: ButtonProps['onClick'] = () => {
+    router.push('/')
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      label: t('th'),
+      key: 'th',
+    },
+    {
+      label: t('en'),
+      key: 'en',
+    }
+  ]
 
   return (
     <Layout>
       <Header className="header">
-        {t('header')}
+        <Typography.Title level={1} className="title">
+          {t(router.pathname)}
+        </Typography.Title>
 
-        {/* <Menu /> */}
-
-        <button onClick={handleChangeLanguage('en')}>
-          en
-        </button>
-        <button onClick={handleChangeLanguage('th')}>
-          th
-        </button>
+        <div className="buttonGroup">
+          <Dropdown menu={{
+            items,
+            onClick: handleMenuClick,
+          }}>
+            <Button>
+              <Space>
+                {t(i18n.language)}
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
+          <Button onClick={handleHomeClick}>
+            {t(router.pathname)}
+          </Button>
+        </div>
       </Header>
 
-      <Content>
+      <Content className="content">
         {children}
       </Content>
-    </Layout>
+    </Layout >
   )
 }
 
