@@ -1,9 +1,12 @@
-import { ReactNode } from "react";
-import { useTranslation } from "react-i18next";
+import { Layout, Menu } from 'antd'
+import { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+const { Header, Content } = Layout
+import './style.scss'
 
 type DefaultLayoutProps = { children: ReactNode }
 
-const Layout = ({ children }: DefaultLayoutProps) => {
+const AppLayout = ({ children }: DefaultLayoutProps) => {
   const { t, i18n } = useTranslation()
 
   const handleChangeLanguage = (lang: string) => () => {
@@ -11,10 +14,11 @@ const Layout = ({ children }: DefaultLayoutProps) => {
   }
 
   return (
-    <>
-      <div>
+    <Layout>
+      <Header className="header">
         {t('header')}
-        <br />
+
+        {/* <Menu /> */}
 
         <button onClick={handleChangeLanguage('en')}>
           en
@@ -22,14 +26,13 @@ const Layout = ({ children }: DefaultLayoutProps) => {
         <button onClick={handleChangeLanguage('th')}>
           th
         </button>
+      </Header>
 
-        <br />
-        <br />
-
+      <Content>
         {children}
-      </div>
-    </>
+      </Content>
+    </Layout>
   )
 }
 
-export default Layout
+export default AppLayout
