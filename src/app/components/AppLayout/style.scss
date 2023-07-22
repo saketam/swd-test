@@ -1,10 +1,14 @@
+.layout {
+  background: var(--bg);
+}
+
 .header {
   background-color: transparent;
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background-color: #00000050;
   height: 10vh;
+  background-color: #00000010;
 }
 
 .content {

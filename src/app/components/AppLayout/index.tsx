@@ -35,7 +35,7 @@ const AppLayout = ({ children }: DefaultLayoutProps) => {
   ]
 
   return (
-    <Layout>
+    <Layout className="layout">
       <Header className="header">
         <Typography.Title level={1} className="title">
           {t(router.pathname)}
