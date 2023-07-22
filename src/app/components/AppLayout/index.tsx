@@ -54,7 +54,7 @@ const AppLayout = ({ children }: DefaultLayoutProps) => {
             </Button>
           </Dropdown>
           <Button onClick={handleHomeClick}>
-            {t(router.pathname)}
+            {t('/')}
           </Button>
         </div>
       </Header>

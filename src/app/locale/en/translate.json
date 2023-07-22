@@ -1,6 +1,7 @@
 {
   "translation": {
     "/": "Home Page",
+    "/_error": "Error",
     "web_page": "Layout & style",
     "form_page": "Form Management",
     "en": "English",
