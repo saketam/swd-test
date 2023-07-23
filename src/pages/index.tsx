@@ -1,37 +1,40 @@
-import { decrement, increment } from "@features/counterSlice"
-import { RootState } from "@features/store"
-import { useDispatch, useSelector } from "react-redux"
+import { Button, ConfigProvider } from "antd"
+import { useRouter } from "next/router"
+import { useTranslation } from "react-i18next"
+import '../app/styles/index.scss'
 
 const Home = () => {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
+  const { t } = useTranslation()
+  const router = useRouter()
+
+  const handleClick = (url: string) => () => { router.push(url) }
 
   return (
-    <>
-      <h2>
-        {count}
+    <div className="homepageWrapper">
+      <Button className="homepageButton" onClick={handleClick('web_page')}>
+        <div className="textBtton">
+          <div>
+            {t('test1')}
+          </div>
 
-      </h2>
+          <div>
+            {t('/web_page')}
+          </div>
+        </div>
+      </Button>
 
-      <br />
-      <br />
+      <Button className="homepageButton" onClick={handleClick('form_page')}>
+        <div className="textBtton">
+          <div>
+            {t('test2')}
+          </div>
 
-      <div>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
-      </div>
-    </>
+          <div>
+            {t('/form_page')}
+          </div>
+        </div>
+      </Button>
+    </div >
   )
 }
 

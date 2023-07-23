@@ -2,9 +2,11 @@
   "translation": {
     "/": "Home Page",
     "/_error": "Error",
-    "web_page": "Layout & style",
-    "form_page": "Form Management",
+    "/web_page": "Layout & Style",
+    "/form_page": "Form & Table",
     "en": "English",
-    "th": "Thai"
+    "th": "Thai",
+    "test1": "Test 1",
+    "test2": "Test 2"
   }
 }
