@@ -9,6 +9,44 @@
     "test1": "แบบทดสอบที่ 1",
     "test2": "แบบทดสอบที่ 2",
     "move_shape": "เลื่อนรูปแบบ",
-    "move_position": "เปลี่ยนตำแหน่ง"
+    "move_position": "เปลี่ยนตำแหน่ง",
+    "form": {
+      "nameTitle": "คำนำหน้า",
+      "name": "ชื่อจริง",
+      "surName": "นามสกุล",
+      "dateofBirth": "วันเกิด",
+      "dateofBirthPlaceHolder": "เดือน/วัน/ปี",
+      "nationality": "สัญชาติ",
+      "personalId": "เลขบัตรประชาชน",
+      "gender": "เพศ",
+      "tel": "หมายเลขโทรศัพท์มือถือ",
+      "passportId": "หนังสือเดินทาง",
+      "expectedSalary": "เงินเดือนที่คาดหวัง",
+      "clear": "ล้างข้อมูล",
+      "submit": "ส่งข้อมูล"
+    },
+    "messages": {
+      "error": {
+        "required": "กรุณากรอก $t({{field}})"
+      }
+    },
+    "option": {
+      "nameTitle": {
+        "mr": "นาย",
+        "miss": "นางสาว",
+        "mrs": "นาง"
+      },
+      "nationality": {
+        "thai": "ไทย"
+      },
+      "tel": {
+        "+66": "+66"
+      }
+    },
+    "radio": {
+      "male": "ผู้ชาย",
+      "female": "ผู้หญิง",
+      "none": "ไม่ระบุ"
+    }
   }
 }
