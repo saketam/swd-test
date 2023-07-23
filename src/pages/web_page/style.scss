@@ -69,12 +69,7 @@
   background-color: grey;
   width: 200px;
   height: 100px;
-  clip-path: polygon(
-    25% 0,
-    100% 0, 
-    75% 100%,
-    0 100%
-  );
+  clip-path: polygon(0% 0, 75% 0, 100% 100%, 25% 100%);
 }
 
 .oval {

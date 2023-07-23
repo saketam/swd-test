@@ -1,10 +1,8 @@
-import { Button, Col, ConfigProvider, Divider, Row } from "antd"
-import { t } from "i18next"
-import { useRouter } from "next/router"
-import { useState } from "react"
-import { useTranslation } from "react-i18next"
 import './style.scss'
 
+import { Button, Col, Divider, Row } from "antd"
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
 
 const TriangleLeft = () => <div className="triangle triangle-left" />
 const TriangleRight = () => <div className="triangle triangle-right" />
@@ -18,79 +16,111 @@ const Circle = () => <div className="circle" />
 const Trapezoid = () => <div className="trapezoid" />
 
 const startShape = [
-  Parallelogram,
-  Rectangle,
-  Trapezoid,
+  Square,
   Circle,
   Oval,
-  Square,
+  Trapezoid,
+  Rectangle,
+  Parallelogram,
 ]
 
-const ActionSection = () => {
-  return (
-    <Row >
-      <Col span={8}>
-        <Row justify='end' >
-          <Button className="button">
-            <TriangleLeft />
-            <span className="description">{t('move_shape')}</span>
-          </Button>
-        </Row>
-      </Col>
-      <Col span={8}>
-        <Row justify='center' >
-          <Button className="button2">
-            <Row>
-              <Col span={10}>
-                <TriangleUp />
-              </Col>
-              <Col span={4} />
-              <Col span={10}>
-                <Triangledown />
-              </Col>
-            </Row>
-          </Button>
-        </Row>
-        <span className="description">{t('move_position')}</span>
-      </Col>
-      <Col span={8}>
-        <Row justify='start' >
-          <Button className="button">
-            <TriangleRight />
-            <span className="description">{t('move_shape')}</span>
-          </Button>
-        </Row>
-      </Col>
-    </Row>
-  )
-}
-
-const webPage = () => {
+const WebPage = () => {
   const { t } = useTranslation()
   const [shapes, setShapes] = useState(startShape)
+
+  const handleMoveShape = (direction: string) => () => {
+    if (direction == 'left') {
+      return setShapes(prev => {
+        const newShape = [...prev]
+        const first = newShape.shift() as () => JSX.Element
+        return [...newShape, first]
+      })
+    } else if (direction == 'right') {
+      return setShapes(prev => {
+        const newShape = [...prev]
+        const last = newShape.pop() as () => JSX.Element
+        return [last, ...newShape]
+      })
+    } else if (direction == 'updown') {
+      // Move Position ให้สลับ Grid Layout ขึ้นลง  // sad :(
+      return setShapes(prev => {
+        const newShape = [...prev]
+        const first = newShape.slice(0, 3)
+        const last = newShape.slice(3, 6)
+        return [...last, ...first]
+      })
+    } else if (direction == 'random') {
+      return setShapes(prev => {
+        const newShape = [...prev]
+        return newShape.sort(() => 0.5 - Math.random())
+      })
+    }
+  }
+
+  const ActionSection = () => {
+    return (
+      <Row >
+        <Col span={8}>
+          <Row justify='end' >
+            <Button className="button" onClick={handleMoveShape('left')}>
+              <TriangleLeft />
+              <span className="description">{t('move_shape')}</span>
+            </Button>
+          </Row>
+        </Col>
+        <Col span={8}>
+          <Row justify='center' >
+            <Button className="button2" onClick={handleMoveShape('updown')}>
+              <Row>
+                <Col span={10}>
+                  <TriangleUp />
+                </Col>
+                <Col span={4} />
+                <Col span={10}>
+                  <Triangledown />
+                </Col>
+              </Row>
+            </Button>
+          </Row>
+          <span className="description">{t('move_position')}</span>
+        </Col>
+        <Col span={8}>
+          <Row justify='start' >
+            <Button className="button" onClick={handleMoveShape('right')}>
+              <TriangleRight />
+              <span className="description">{t('move_shape')}</span>
+            </Button>
+          </Row>
+        </Col>
+      </Row>
+    )
+  }
+
+  const ResultSection = () => {
+    return (
+      <Row gutter={[16, 16]} justify='center' id="row-result">
+        {
+          shapes.map((shape, index) => (
+            <Col span={8} key={index}>
+              <Row justify='center'>
+                <Button className="button" onClick={handleMoveShape('random')}>
+                  {shape()}
+                </Button>
+              </Row>
+            </Col>
+          ))
+        }
+      </Row>
+    )
+  }
 
   return (
     <>
       <ActionSection />
       <Divider />
-
-      <Row gutter={[16, 16]} justify='center'>
-        {
-          shapes.map((shape) => {
-            return (
-              <Col span={8} >
-                <Row justify='center'>
-                  <Button className="button">
-                    {shape()}
-                  </Button>
-                </Row>
-              </Col>
-            )
-          })
-        }
-      </Row>
+      <ResultSection />
     </>
   )
 }
 
-export default webPage
+export default WebPage
