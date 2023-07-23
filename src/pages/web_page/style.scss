@@ -1,0 +1,92 @@
+.button {
+  width: max-content;
+  padding: 20px;
+  height: 250px;
+}
+
+.button2 {
+  width: 600px;
+  padding: 20px;
+  height: 250px;
+}
+
+.button:hover,
+.button2:hover {
+  background-color: #ffa200;
+}
+
+.description {
+  border: 1px solid grey;
+  font-size: 14px;
+  padding: 8px;
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translate(-50%, 0%);
+  text-align: center;
+  border-radius: 25px;
+  background-color: #6eda78;
+  color: white;
+}
+
+.triangle {
+  background-color: grey;
+  width: 200px;
+  height: 200px;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+
+  &-left {
+    transform: rotate(-90deg);
+  }
+  &-right {
+    transform: rotate(90deg);
+  }
+  &-down {
+    transform: rotate(180deg);
+  }
+}
+
+.square {
+  width: 200px;
+  height: 200px;
+  background-color: grey;
+}
+
+.rectangle {
+  width: 200px;
+  height: 100px;
+  background-color: grey;
+}
+
+.trapezoid {
+  background-color: grey;
+  width: 200px;
+  height: 100px;
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%);
+}
+
+.parallelogram {
+  background-color: grey;
+  width: 200px;
+  height: 100px;
+  clip-path: polygon(
+    25% 0,
+    100% 0, 
+    75% 100%,
+    0 100%
+  );
+}
+
+.oval {
+  width: 200px;
+  height: 100px;
+  background-color: grey;
+  border-radius: 50%;
+}
+
+.circle {
+  width: 200px;
+  height: 200px;
+  background-color: grey;
+  border-radius: 50%;
+}

@@ -7,6 +7,8 @@
     "en": "English",
     "th": "Thai",
     "test1": "Test 1",
-    "test2": "Test 2"
+    "test2": "Test 2",
+    "move_shape": "Move Shape",
+    "move_position": "Move Position"
   }
 }
