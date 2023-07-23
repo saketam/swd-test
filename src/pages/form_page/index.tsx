@@ -57,7 +57,9 @@ const formPage = () => {
             <Form.Item
               label={t('form.nameTitle')}
               name="nameTitle"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.nameTitle' }) }]}
+              rules={[
+                { required: true, message: t('messages.error.required', { field: 'form.nameTitle' }) }
+              ]}
             >
               <Select
                 placeholder={t('form.nameTitle')}
@@ -70,7 +72,10 @@ const formPage = () => {
             <Form.Item
               label={t('form.name')}
               name="name"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.name' }) }]}
+              rules={[
+                { whitespace: true, message: t('messages.error.required', { field: 'form.name' }) },
+                { required: true, message: t('messages.error.required', { field: 'form.name' }) }
+              ]}
             >
               <Input />
             </Form.Item>
@@ -79,7 +84,10 @@ const formPage = () => {
             <Form.Item
               label={t('form.surName')}
               name="surName"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.surName' }) }]}
+              rules={[
+                { whitespace: true, message: t('messages.error.required', { field: 'form.surName' }) },
+                { required: true, message: t('messages.error.required', { field: 'form.surName' }) }
+              ]}
             >
               <Input />
             </Form.Item>
@@ -104,7 +112,6 @@ const formPage = () => {
             <Form.Item
               label={t('form.nationality')}
               name="nationality"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.nationality' }) }]}
             >
               <Select
                 placeholder={t('form.nationality')}
@@ -120,6 +127,11 @@ const formPage = () => {
             <Form.Item
               label={t('form.personalId')}
               name="personalId"
+              rules={[
+                { required: true, message: t('messages.error.required', { field: 'form.personalId' }) },
+                { whitespace: true, message: t('messages.error.required', { field: 'form.personalId' }) },
+              ]}
+
             >
               <Row gutter={8} justify='start' >
                 <Col span={3}><Input maxLength={1} /></Col> -
@@ -135,12 +147,11 @@ const formPage = () => {
             <Form.Item
               label={t('form.gender')}
               name="gender"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.gender' }) }]}
-
+              rules={[
+                { required: true, message: t('messages.error.required', { field: 'form.surName' }) }
+              ]}
             >
-              <Radio.Group
-              //  onChange={()=>{}} value={value}
-              >
+              <Radio.Group>
                 <Radio value={'male'}>{t('radio.male')}</Radio>
                 <Radio value={'female'}>{t('radio.female')}</Radio>
                 <Radio value={'none'}>{t('radio.none')}</Radio>
@@ -153,7 +164,10 @@ const formPage = () => {
             <Form.Item
               label={t('form.tel')}
               name="tel"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.tel' }) }]}
+              rules={[
+                { required: true, message: t('messages.error.required', { field: 'form.tel' }) },
+                { whitespace: true, message: t('messages.error.required', { field: 'form.tel' }) },
+              ]}
             >
               <Row gutter={8} justify='start' >
                 <Col span={4}>
@@ -172,6 +186,9 @@ const formPage = () => {
             <Form.Item
               label={t('form.passportId')}
               name="passportId"
+              rules={[
+                { whitespace: true, message: t('messages.error.required', { field: 'form.tel' }) },
+              ]}
             >
               <Col span={10}>
                 <Input />
@@ -183,8 +200,10 @@ const formPage = () => {
             <Form.Item
               label={t('form.expectedSalary')}
               name="expectedSalary"
-              rules={[{ required: true, message: t('messages.error.required', { field: 'form.expectedSalary' }) }]}
-
+              rules={[
+                { required: true, message: t('messages.error.required', { field: 'form.expectedSalary' }) },
+                { whitespace: true, message: t('messages.error.required', { field: 'form.expectedSalary' }) },
+              ]}
             >
               <Input />
             </Form.Item>

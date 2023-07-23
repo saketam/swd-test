@@ -27,7 +27,7 @@
     },
     "messages": {
       "error": {
-        "required": "Please input your $t({{field}})"
+        "required": "$t({{field}}) Cannot be Blank."
       }
     },
     "option": {
