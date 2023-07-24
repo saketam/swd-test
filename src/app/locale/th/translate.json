@@ -13,7 +13,7 @@
     "form": {
       "nameTitle": "คำนำหน้า",
       "name": "ชื่อจริง",
-      "surName": "นามสกุล",
+      "surname": "นามสกุล",
       "dateofBirth": "วันเกิด",
       "dateofBirthPlaceHolder": "เดือน/วัน/ปี",
       "nationality": "สัญชาติ",

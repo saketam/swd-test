@@ -13,7 +13,7 @@
     "form": {
       "nameTitle": "Name Title",
       "name": "Name",
-      "surName": "Surname",
+      "surname": "Surname",
       "dateofBirth": "Date of Birth",
       "dateofBirthPlaceHolder": "month/Day/Year",
       "nationality": "Nationality",

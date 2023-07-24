@@ -1,10 +1,17 @@
 import './style.scss'
 
-import { DownOutlined } from '@ant-design/icons'
-import { Button, Col, Dropdown, Form, Input, Row, Space, Select, DatePicker, Radio } from "antd"
-import { useRouter } from "next/router"
-import { useTranslation } from "react-i18next"
+import { RootState } from '@features/store';
+import { UsersState, addUser, getUserbyId, setField } from '@features/userSlice'
+import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd"
+
+
 import { TFunction } from 'i18next'
+import dynamic from 'next/dynamic';
+import { ChangeEvent, useEffect } from 'react';
+import { useTranslation } from "react-i18next"
+import { useDispatch, useSelector } from "react-redux"
+
+const TableSection = dynamic(import("../../app/components/TableSection"), { ssr: false })
 
 const nameTitleOptions = (t: TFunction) => ([
   { value: 'mr', label: t('option.nameTitle.mr') },
@@ -20,14 +27,23 @@ const telOptions = (t: TFunction) => ([
   { value: '+66', label: t('option.tel.+66') },
 ])
 
+// https://redux.js.org/style-guide/#avoid-putting-form-state-in-redux
 const formPage = () => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const dispatch = useDispatch()
 
+  const user = useSelector((state: RootState) => state.user)
   const [form] = Form.useForm()
+  console.log(user);
+
+  useEffect(() => {
+    form.setFieldsValue(user)
+  }, [form, user])
 
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    const newData = { ...values }
+    newData.dateofBirth = values.dateofBirth?.format('MM/DD/YYYY')
+    dispatch(addUser(newData))
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -45,11 +61,10 @@ const formPage = () => {
         form={form}
         name="basic"
         className="formSection"
-        // initialValues={{ remember: true }}
+        initialValues={user}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-      // labelAlign="left"
       >
 
         <Row gutter={8}>
@@ -77,19 +92,21 @@ const formPage = () => {
                 { required: true, message: t('messages.error.required', { field: 'form.name' }) }
               ]}
             >
-              <Input />
+              <Input
+              />
             </Form.Item>
           </Col>
           <Col span={9} >
             <Form.Item
-              label={t('form.surName')}
-              name="surName"
+              label={t('form.surname')}
+              name="surname"
               rules={[
-                { whitespace: true, message: t('messages.error.required', { field: 'form.surName' }) },
-                { required: true, message: t('messages.error.required', { field: 'form.surName' }) }
+                { whitespace: true, message: t('messages.error.required', { field: 'form.surname' }) },
+                { required: true, message: t('messages.error.required', { field: 'form.surname' }) }
               ]}
             >
-              <Input />
+              <Input
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -104,7 +121,6 @@ const formPage = () => {
               <DatePicker
                 placeholder={t('form.dateofBirthPlaceHolder')}
                 format={'MM/DD/YYYY'}
-                onChange={() => { }}
               />
             </Form.Item>
           </Col>
@@ -129,15 +145,14 @@ const formPage = () => {
               name="personalId"
               rules={[
                 { required: true, message: t('messages.error.required', { field: 'form.personalId' }) },
-                { whitespace: true, message: t('messages.error.required', { field: 'form.personalId' }) },
+                { whitespace: true, message: t('messages.error.required', { field: 'form.personalId' }) }
               ]}
-
             >
               <Row gutter={8} justify='start' >
                 <Col span={3}><Input maxLength={1} /></Col> -
-                <Col span={5}><Input maxLength={1} /></Col> -
-                <Col span={5}><Input maxLength={1} /></Col> -
-                <Col span={4}><Input maxLength={1} /></Col> -
+                <Col span={5}><Input maxLength={4} /></Col> -
+                <Col span={5}><Input maxLength={5} /></Col> -
+                <Col span={4}><Input maxLength={2} /></Col> -
                 <Col span={3}><Input maxLength={1} /></Col>
               </Row>
             </Form.Item>
@@ -148,7 +163,7 @@ const formPage = () => {
               label={t('form.gender')}
               name="gender"
               rules={[
-                { required: true, message: t('messages.error.required', { field: 'form.surName' }) }
+                { required: true, message: t('messages.error.required', { field: 'form.surname' }) }
               ]}
             >
               <Radio.Group>
@@ -227,14 +242,6 @@ const formPage = () => {
     )
   }
 
-  const TableSection = () => {
-    return (
-      <>
-        table
-      </>
-    )
-  }
-
   return (
     <Row justify='center'>
       <Col span={24}>
@@ -242,11 +249,33 @@ const formPage = () => {
           <FormSection />
         </Row>
       </Col>
+
+      {JSON.stringify(user)}
+
+      <button
+        onClick={() => {
+          console.log(user);
+        }}
+      >
+        redux
+      </button>
+
+      <button
+        onClick={() => {
+          dispatch(getUserbyId('1690177200574'))
+        }}
+      >
+        get user by id
+      </button>
+
+
       <Col span={24}>
         <Row justify='center' >
           <TableSection />
         </Row>
       </Col>
+
+
     </Row>
   )
 }
