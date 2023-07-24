@@ -256,8 +256,6 @@ const formPage = () => {
         </Row>
       </Col>
 
-      {JSON.stringify(user)}
-
       <Col span={24}>
         <Row justify='center' >
           <TableSection />
