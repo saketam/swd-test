@@ -65,26 +65,35 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<UsersState>) => {
+    createorUpdateUser: (state, action: PayloadAction<UsersState>) => {
       let users = ishaveUsers()
       users = window.localStorage.getItem("users") as string
       const usersObj = JSON.parse(users)
-      const newUser = { ...action.payload, id: Date.now().toString() }
-      const newObj = [...usersObj, newUser]
+      const userIndex = usersObj.findIndex((user: UsersState) => user.id == state.id)
+      let resUser = state as UsersState
 
-      state.id = newUser.id
-      state.nameTitle = newUser.nameTitle
-      state.name = newUser.name
-      state.surname = newUser.surname
-      state.dateofBirth = dayjs(newUser.dateofBirth, 'MM/DD/YYYY')
-      state.nationality = newUser.nationality
-      state.personalId = newUser.personalId
-      state.gender = newUser.gender
-      state.tel = newUser.tel
-      state.passportId = newUser.passportId
-      state.expectedSalary = newUser.expectedSalary
+      if (userIndex == -1) {
+        resUser = { ...action.payload, id: Date.now().toString() }
+        state.id = '0'
+      } else {
+        // update
+        usersObj.splice(userIndex, 1)
+        resUser = { ...action.payload, id: state.id }
+        state.id = resUser.id
+      }
 
-      window.localStorage.setItem("users", JSON.stringify(newObj))
+      state.nameTitle = resUser.nameTitle
+      state.name = resUser.name
+      state.surname = resUser.surname
+      state.dateofBirth = dayjs(resUser.dateofBirth, 'MM/DD/YYYY')
+      state.nationality = resUser.nationality
+      state.personalId = resUser.personalId
+      state.gender = resUser.gender
+      state.tel = resUser.tel
+      state.passportId = resUser.passportId
+      state.expectedSalary = resUser.expectedSalary
+
+      window.localStorage.setItem("users", JSON.stringify([...usersObj, resUser]))
     },
     getUserbyId: (state, action: PayloadAction<string>) => {
       let users = ishaveUsers()
@@ -158,13 +167,12 @@ export const userSlice = createSlice({
       }
       state.passportId = ''
       state.expectedSalary = ''
-
     }
   }
 })
 
 export const {
-  addUser,
+  createorUpdateUser,
   getUserbyId,
   setField,
   clearUser,

@@ -1,7 +1,7 @@
 import './style.scss'
 
 import { RootState } from '@features/store';
-import { addUser, clearUser } from '@features/userSlice'
+import { createorUpdateUser, clearUser } from '@features/userSlice'
 import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd"
 import { TFunction } from 'i18next'
 import dynamic from 'next/dynamic';
@@ -40,7 +40,7 @@ const formPage = () => {
   const onFinish = (values: any) => {
     const newData = { ...values }
     newData.dateofBirth = values.dateofBirth?.format('MM/DD/YYYY')
-    dispatch(addUser(newData))
+    dispatch(createorUpdateUser(newData))
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -255,6 +255,8 @@ const formPage = () => {
           <FormSection />
         </Row>
       </Col>
+
+      {JSON.stringify(user)}
 
       <Col span={24}>
         <Row justify='center' >
