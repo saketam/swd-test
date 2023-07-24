@@ -3,11 +3,12 @@ import './style.scss'
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { UsersState, getUserbyId, deleteUserbyId } from "@features/userSlice"
 import { Button, Checkbox, Col, Row, Table } from "antd"
-import type { ColumnsType } from 'antd/es/table'
+import type { ColumnsType, TableProps } from 'antd/es/table'
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useDispatch } from "react-redux"
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+
 interface DataType {
   key: React.Key
   name: string
@@ -46,18 +47,26 @@ const TableSection = () => {
     {
       title: t('table.name'),
       dataIndex: 'name',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.name.localeCompare(b.name)
     },
     {
       title: t('table.gender'),
       dataIndex: 'gender',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.gender.localeCompare(b.gender)
     },
     {
       title: t('table.tel'),
       dataIndex: 'tel',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.tel.localeCompare(b.tel)
     },
     {
       title: t('table.nationality'),
       dataIndex: 'nationality',
+      defaultSortOrder: 'descend',
+      sorter: (a, b) => a.nationality.localeCompare(b.nationality)
     },
     {
       title: t('table.action'),
@@ -100,6 +109,11 @@ const TableSection = () => {
 
   }
 
+  const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
+    console.log('params', pagination, filters, sorter, extra);
+  };
+
+
   return (
     <Row style={{ width: '100%' }}>
       <Col span={20} offset={4} >
@@ -122,6 +136,7 @@ const TableSection = () => {
             rowSelection={rowSelection}
             columns={columns}
             dataSource={data}
+            onChange={onChange}
           />
         </Row>
       </Col>
