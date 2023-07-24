@@ -108,6 +108,28 @@ export const userSlice = createSlice({
       const { value, field }: setfieldInterface = action.payload
       state[field] = value
     },
+    clearUser: (state) => {
+      state.id = ''
+      state.nameTitle = ''
+      state.name = ''
+      state.surname = ''
+      state.dateofBirth = ''
+      state.nationality = ''
+      state.personalId = {
+        one: '',
+        two: '',
+        three: '',
+        four: '',
+        five: '',
+      }
+      state.gender = ''
+      state.tel = {
+        code: '',
+        number: '',
+      }
+      state.passportId = ''
+      state.expectedSalary = ''
+    },
 
   }
 })
@@ -115,7 +137,8 @@ export const userSlice = createSlice({
 export const {
   addUser,
   getUserbyId,
-  setField
+  setField,
+  clearUser
 } = userSlice.actions
 
 export default userSlice.reducer

@@ -1,7 +1,7 @@
 import './style.scss'
 
 import { RootState } from '@features/store';
-import { UsersState, addUser, getUserbyId, setField } from '@features/userSlice'
+import { UsersState, addUser, getUserbyId, setField, clearUser } from '@features/userSlice'
 import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd"
 
 
@@ -50,9 +50,9 @@ const formPage = () => {
     console.log('Failed:', errorInfo)
   }
 
-  const handleCancel = () => {
-    const res = form.resetFields();    //reset form
-    console.log(res);
+  const handleClear = () => {
+    const res = form.resetFields(); 
+    dispatch(clearUser())
   };
 
   const FormSection = () => {
@@ -252,7 +252,7 @@ const formPage = () => {
           </Col>
           <Col span={6}>
             <Form.Item wrapperCol={{ offset: 8 }}>
-              <Button type="default" onClick={handleCancel}>
+              <Button type="default" onClick={handleClear}>
                 {t('form.clear')}
               </Button>
             </Form.Item>
