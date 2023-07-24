@@ -1,13 +1,11 @@
 import './style.scss'
 
 import { RootState } from '@features/store';
-import { UsersState, addUser, getUserbyId, setField, clearUser } from '@features/userSlice'
+import { addUser, clearUser } from '@features/userSlice'
 import { Button, Col, DatePicker, Form, Input, Radio, Row, Select } from "antd"
-
-
 import { TFunction } from 'i18next'
 import dynamic from 'next/dynamic';
-import { ChangeEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from "react-i18next"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -34,7 +32,6 @@ const formPage = () => {
 
   const user = useSelector((state: RootState) => state.user)
   const [form] = Form.useForm()
-  console.log(user);
 
   useEffect(() => {
     form.setFieldsValue(user)
@@ -51,7 +48,7 @@ const formPage = () => {
   }
 
   const handleClear = () => {
-    const res = form.resetFields(); 
+    form.resetFields();
     dispatch(clearUser())
   };
 
@@ -66,7 +63,6 @@ const formPage = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-
         <Row gutter={8}>
           <Col span={5} >
             <Form.Item
@@ -139,31 +135,8 @@ const formPage = () => {
         </Row>
 
         <Row gutter={8} justify='start'>
-          {/* <Col span={24}>
-            <Form.Item
-              label={t('form.personalId')}
-              name="personalId"
-              rules={[
-                { required: true, message: t('messages.error.required', { field: 'form.personalId' }) },
-                { whitespace: true, message: t('messages.error.required', { field: 'form.personalId' }) }
-              ]}
-            >
-              <Row gutter={8} justify='start' >
-                <Col span={3}><Input maxLength={1} name="personalId" /></Col> -
-                <Col span={5}><Input maxLength={4} /></Col> -
-                <Col span={5}><Input maxLength={5} /></Col> -
-                <Col span={4}><Input maxLength={2} /></Col> -
-                <Col span={3}><Input maxLength={1} /></Col>
-              </Row>
-
-            </Form.Item>
-          </Col> */}
-
           <Col span={24}>
-            <Form.Item
-              label={t('form.personalId')}
-            // name={["personalId.one", "personalId.two", "personalId.three", "personalId.four", "personalId.five",]}
-            >
+            <Form.Item label={t('form.personalId')}>
               <Row gutter={8} justify='start' >
                 <Col span={3}>
                   <Form.Item name={['personalId', 'one']}><Input maxLength={1} /></Form.Item>
@@ -177,15 +150,15 @@ const formPage = () => {
                 <Col span={4}>
                   <Form.Item name={['personalId', 'four']}><Input maxLength={2} /></Form.Item>
                 </Col> -
-
                 <Col span={3}>
                   <Form.Item name={['personalId', 'five']}><Input maxLength={1} /></Form.Item>
                 </Col>
               </Row>
             </Form.Item>
           </Col>
+        </Row>
 
-
+        <Row gutter={8} justify='start'>
           <Col span={24}>
             <Form.Item
               label={t('form.gender')}
@@ -199,10 +172,11 @@ const formPage = () => {
                 <Radio value={'female'}>{t('radio.female')}</Radio>
                 <Radio value={'none'}>{t('radio.none')}</Radio>
               </Radio.Group>
-
             </Form.Item>
           </Col>
+        </Row>
 
+        <Row gutter={8} justify='start'>
           <Col span={24}>
             <Form.Item
               label={t('form.tel')}
@@ -226,7 +200,9 @@ const formPage = () => {
               </Row>
             </Form.Item>
           </Col>
+        </Row>
 
+        <Row gutter={8} justify='start'>
           <Col span={24}>
             <Col span={8}>
               <Form.Item
@@ -237,7 +213,9 @@ const formPage = () => {
               </Form.Item>
             </Col>
           </Col>
+        </Row>
 
+        <Row gutter={8} justify='start'>
           <Col span={12}>
             <Form.Item
               label={t('form.expectedSalary')}
@@ -265,44 +243,24 @@ const formPage = () => {
             </Form.Item>
           </Col>
         </Row>
+
       </Form >
     )
   }
 
   return (
-    <Row justify='center'>
+    <Row gutter={[0, 40]} justify='center' >
       <Col span={24}>
         <Row justify='center' >
           <FormSection />
         </Row>
       </Col>
 
-      {JSON.stringify(user)}
-
-      <button
-        onClick={() => {
-          console.log(user);
-        }}
-      >
-        redux
-      </button>
-
-      <button
-        onClick={() => {
-          dispatch(getUserbyId('1690184716606'))
-        }}
-      >
-        get user by id
-      </button>
-
-
       <Col span={24}>
         <Row justify='center' >
           <TableSection />
         </Row>
       </Col>
-
-
     </Row>
   )
 }
