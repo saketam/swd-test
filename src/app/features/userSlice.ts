@@ -9,9 +9,18 @@ export interface UsersState {
   surname: string
   dateofBirth: any
   nationality: string
-  personalId: string
+  personalId: {
+    one: string
+    two: string
+    three: string
+    four: string
+    five: string
+  }
   gender: string
-  tel: string
+  tel: {
+    code: string
+    number: string
+  }
   passportId: string
   expectedSalary: string
 }
@@ -28,9 +37,18 @@ const initialState: UsersState = {
   surname: '',
   dateofBirth: '',
   nationality: '',
-  personalId: '',
+  personalId: {
+    one: '',
+    two: '',
+    three: '',
+    four: '',
+    five: '',
+  },
   gender: '',
-  tel: '',
+  tel: {
+    code: '',
+    number: '',
+  },
   passportId: '',
   expectedSalary: '',
 }
@@ -58,7 +76,7 @@ export const userSlice = createSlice({
       state.nameTitle = newUser.nameTitle
       state.name = newUser.name
       state.surname = newUser.surname
-      state.dateofBirth =  dayjs(newUser.dateofBirth, 'MM/DD/YYYY')
+      state.dateofBirth = dayjs(newUser.dateofBirth, 'MM/DD/YYYY')
       state.nationality = newUser.nationality
       state.personalId = newUser.personalId
       state.gender = newUser.gender

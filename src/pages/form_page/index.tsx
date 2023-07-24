@@ -105,8 +105,7 @@ const formPage = () => {
                 { required: true, message: t('messages.error.required', { field: 'form.surname' }) }
               ]}
             >
-              <Input
-              />
+              <Input />
             </Form.Item>
           </Col>
         </Row>
@@ -128,6 +127,7 @@ const formPage = () => {
             <Form.Item
               label={t('form.nationality')}
               name="nationality"
+              rules={[{ required: true, message: t('messages.error.required', { field: 'form.nationality' }) }]}
             >
               <Select
                 placeholder={t('form.nationality')}
@@ -139,7 +139,7 @@ const formPage = () => {
         </Row>
 
         <Row gutter={8} justify='start'>
-          <Col span={24}>
+          {/* <Col span={24}>
             <Form.Item
               label={t('form.personalId')}
               name="personalId"
@@ -149,14 +149,42 @@ const formPage = () => {
               ]}
             >
               <Row gutter={8} justify='start' >
-                <Col span={3}><Input maxLength={1} /></Col> -
+                <Col span={3}><Input maxLength={1} name="personalId" /></Col> -
                 <Col span={5}><Input maxLength={4} /></Col> -
                 <Col span={5}><Input maxLength={5} /></Col> -
                 <Col span={4}><Input maxLength={2} /></Col> -
                 <Col span={3}><Input maxLength={1} /></Col>
               </Row>
+
+            </Form.Item>
+          </Col> */}
+
+          <Col span={24}>
+            <Form.Item
+              label={t('form.personalId')}
+            // name={["personalId.one", "personalId.two", "personalId.three", "personalId.four", "personalId.five",]}
+            >
+              <Row gutter={8} justify='start' >
+                <Col span={3}>
+                  <Form.Item name={['personalId', 'one']}><Input maxLength={1} /></Form.Item>
+                </Col> -
+                <Col span={5}>
+                  <Form.Item name={['personalId', 'two']}><Input maxLength={4} /></Form.Item>
+                </Col> -
+                <Col span={5}>
+                  <Form.Item name={['personalId', 'three']}><Input maxLength={5} /></Form.Item>
+                </Col> -
+                <Col span={4}>
+                  <Form.Item name={['personalId', 'four']}><Input maxLength={2} /></Form.Item>
+                </Col> -
+
+                <Col span={3}>
+                  <Form.Item name={['personalId', 'five']}><Input maxLength={1} /></Form.Item>
+                </Col>
+              </Row>
             </Form.Item>
           </Col>
+
 
           <Col span={24}>
             <Form.Item
@@ -178,7 +206,6 @@ const formPage = () => {
           <Col span={24}>
             <Form.Item
               label={t('form.tel')}
-              name="tel"
               rules={[
                 { required: true, message: t('messages.error.required', { field: 'form.tel' }) },
                 { whitespace: true, message: t('messages.error.required', { field: 'form.tel' }) },
@@ -186,29 +213,29 @@ const formPage = () => {
             >
               <Row gutter={8} justify='start' >
                 <Col span={4}>
-                  <Select
-                    options={telOptions(t)}
-                  />
+                  <Form.Item name={['tel', 'code']}>
+                    <Select options={telOptions(t)} />
+                  </Form.Item>
                 </Col>
+
                 <Col span={12}>
-                  <Input />
+                  <Form.Item name={['tel', 'number']}>
+                    <Input />
+                  </Form.Item>
                 </Col>
               </Row>
             </Form.Item>
           </Col>
 
           <Col span={24}>
-            <Form.Item
-              label={t('form.passportId')}
-              name="passportId"
-              rules={[
-                { whitespace: true, message: t('messages.error.required', { field: 'form.tel' }) },
-              ]}
-            >
-              <Col span={10}>
+            <Col span={8}>
+              <Form.Item
+                label={t('form.passportId')}
+                name="passportId"
+              >
                 <Input />
-              </Col>
-            </Form.Item>
+              </Form.Item>
+            </Col>
           </Col>
 
           <Col span={12}>
@@ -238,7 +265,7 @@ const formPage = () => {
             </Form.Item>
           </Col>
         </Row>
-      </Form>
+      </Form >
     )
   }
 
@@ -262,7 +289,7 @@ const formPage = () => {
 
       <button
         onClick={() => {
-          dispatch(getUserbyId('1690177200574'))
+          dispatch(getUserbyId('1690184716606'))
         }}
       >
         get user by id
