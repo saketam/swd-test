@@ -10,6 +10,7 @@
     "test2": "Test 2",
     "move_shape": "Move Shape",
     "move_position": "Move Position",
+    "checkAll": "Check all",
     "form": {
       "nameTitle": "Name Title",
       "name": "Name",
@@ -47,6 +48,13 @@
       "male": "Male",
       "female": "Female",
       "none": "None"
+    },
+    "table": {
+      "name": "Name",
+      "gender": "Gender",
+      "tel": "Tel",
+      "nationality": "Nationality",
+      "action": "action"
     }
   }
 }

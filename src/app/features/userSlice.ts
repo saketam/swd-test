@@ -130,7 +130,36 @@ export const userSlice = createSlice({
       state.passportId = ''
       state.expectedSalary = ''
     },
+    deleteUserbyId: (state, action: PayloadAction<string>) => {
+      let users = ishaveUsers()
+      const usersObj = JSON.parse(users)
+      const userIndex = usersObj.findIndex((user: UsersState) => user.id == action.payload)
 
+      usersObj.splice(userIndex, 1)
+      window.localStorage.setItem("users", JSON.stringify(usersObj))
+
+      state.id = ''
+      state.nameTitle = ''
+      state.name = ''
+      state.surname = ''
+      state.dateofBirth = ''
+      state.nationality = ''
+      state.personalId = {
+        one: '',
+        two: '',
+        three: '',
+        four: '',
+        five: '',
+      }
+      state.gender = ''
+      state.tel = {
+        code: '',
+        number: '',
+      }
+      state.passportId = ''
+      state.expectedSalary = ''
+
+    }
   }
 })
 
@@ -138,7 +167,8 @@ export const {
   addUser,
   getUserbyId,
   setField,
-  clearUser
+  clearUser,
+  deleteUserbyId
 } = userSlice.actions
 
 export default userSlice.reducer

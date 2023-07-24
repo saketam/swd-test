@@ -1,17 +1,131 @@
-const TableSection = () => {
-  const users = JSON.parse(window.localStorage.getItem("users") as string)
+import './style.scss'
 
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { UsersState, getUserbyId, deleteUserbyId } from "@features/userSlice"
+import { Button, Checkbox, Col, Row, Table } from "antd"
+import type { ColumnsType } from 'antd/es/table'
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import { useDispatch } from "react-redux"
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+interface DataType {
+  key: React.Key
+  name: string
+  gender: string
+  tel: string
+  nationality: string
+  action: React.ReactNode
+}
+
+const ActionSection = (id: string) => {
+  const dispatch = useDispatch()
+
+  const handleEdit = () => {
+    dispatch(getUserbyId(id))
+  }
+
+  const handledelete = () => {
+    dispatch(deleteUserbyId(id))
+  }
 
   return (
-    <>
-      {
-        users?.map((user: any, index: number) => (
-          <div key={index}>
-            {JSON.stringify(user)}<br /><br />
-          </div>
-        ))
-      }
-    </>
+    <div >
+      <EditOutlined onClick={handleEdit} style={{ fontSize: '24px', paddingRight: '24px' }} />
+      <DeleteOutlined onClick={handledelete} style={{ fontSize: '24px' }} />
+    </div>
+  )
+}
+
+const TableSection = () => {
+
+  const { t } = useTranslation()
+  const users = JSON.parse(window.localStorage.getItem("users") as string)
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: t('table.name'),
+      dataIndex: 'name',
+    },
+    {
+      title: t('table.gender'),
+      dataIndex: 'gender',
+    },
+    {
+      title: t('table.tel'),
+      dataIndex: 'tel',
+    },
+    {
+      title: t('table.nationality'),
+      dataIndex: 'nationality',
+    },
+    {
+      title: t('table.action'),
+      dataIndex: 'action',
+    },
+  ]
+
+  const data: DataType[] = []
+  users.map((user: UsersState, index: number) => {
+    data.push({
+      key: index,
+      name: `${t(`option.nameTitle.${user.nameTitle}`)} ${user.name} ${user.surname}`,
+      gender: t(`radio.${user.gender}`),
+      tel: `${user.tel.code} ${user.tel.number}`,
+      nationality: t(`option.nationality.${user.nationality}`),
+      action: ActionSection(user.id)
+    })
+  })
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log(newSelectedRowKeys)
+
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+
+  const onCheckAll = (e: CheckboxChangeEvent) => {
+    if (e.target.checked) {
+      setSelectedRowKeys(Array.from(Array(users.length).keys()))
+    } else {
+      setSelectedRowKeys([])
+    }
+  }
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange
+  }
+
+  const handleClear = () => {
+
+  }
+
+  return (
+    <Row style={{ width: '100%' }}>
+      <Col span={20} offset={4} >
+        <Row justify="start">
+          <Col span={2}>
+            <Checkbox onChange={onCheckAll}>{t('checkAll')}</Checkbox>
+          </Col>
+          <Col span={2}>
+            <Button type="default" onClick={handleClear}>
+              {t('form.clear')}
+            </Button>
+          </Col>
+        </Row>
+      </Col>
+
+      <Col span={24}>
+        <Row justify="center">
+          <Table
+            className="table"
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+          />
+        </Row>
+      </Col>
+    </Row>
   )
 }
 
