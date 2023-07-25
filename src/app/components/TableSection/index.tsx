@@ -75,7 +75,7 @@ const TableSection = () => {
   ]
 
   const data: DataType[] = []
-  users.map((user: UsersState, index: number) => {
+  users?.map((user: UsersState, index: number) => {
     data.push({
       key: index,
       name: `${t(`option.nameTitle.${user.nameTitle}`)} ${user.name} ${user.surname}`,
