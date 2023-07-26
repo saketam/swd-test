@@ -19,10 +19,12 @@ const nameTitleOptions = (t: TFunction) => ([
 
 const nationalityOptions = (t: TFunction) => ([
   { value: 'thai', label: t('option.nationality.thai') },
+  { value: 'filipino', label: t('option.nationality.filipino') },
 ])
 
 const telOptions = (t: TFunction) => ([
   { value: '+66', label: t('option.tel.+66') },
+  { value: '+63', label: t('option.tel.+63') },
 ])
 
 // https://redux.js.org/style-guide/#avoid-putting-form-state-in-redux

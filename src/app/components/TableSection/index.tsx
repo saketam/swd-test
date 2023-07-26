@@ -115,7 +115,7 @@ const TableSection = () => {
 
 
   return (
-    <Row style={{ width: '100%' }}>
+    <Row style={{ width: '100%' }} gutter={[0, 20]}>
       <Col span={20} offset={4} >
         <Row justify="start">
           <Col span={2}>

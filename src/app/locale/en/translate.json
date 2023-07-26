@@ -38,10 +38,12 @@
         "mrs": "Mrs."
       },
       "nationality": {
-        "thai": "Thai"
+        "thai": "Thai",
+        "filipino": "Filipino"
       },
       "tel": {
-        "+66": "+66"
+        "+66": "+66",
+        "+63": "+63"
       }
     },
     "radio": {
