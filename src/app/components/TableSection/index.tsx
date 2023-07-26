@@ -104,8 +104,6 @@ const TableSection = () => {
   }
 
   const handleClearSelected = () => {
-    if (selectedRowKeys == []) return
-
     dispatch(deleteUserbyIds(selectedRowKeys))
     setSelectedRowKeys([])
   }
