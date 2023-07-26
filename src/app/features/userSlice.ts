@@ -30,6 +30,10 @@ interface setfieldInterface {
   field: "nameTitle" | "name" | "surname" | "dateofBirth" | "nationality" | "personalId" | "gender" | "tel" | "passportId" | "expectedSalary"
 }
 
+const keys = [
+  "nameTitle", "name", "surname", "dateofBirth", "nationality", "personalId", "gender", "tel", "passportId", "expectedSalary"
+]
+
 const initialState: UsersState = {
   id: '0',
   nameTitle: '',
@@ -53,12 +57,34 @@ const initialState: UsersState = {
   expectedSalary: '',
 }
 
-const ishaveUsers = () => {
+
+export const sanitizeUsers = () => {
   let users = window.localStorage.getItem("users")
-  if (users == null) {
+
+  try {
+    let parse = JSON.parse(JSON.parse(JSON.stringify(users)))
+
+    if (typeof parse != 'object') {
+      throw "Users is not an Colection";
+    }
+
+    if (Array.isArray(parse)) {
+      parse.map(p => {
+        let checkAllKeys = keys.every((i) => p.hasOwnProperty(i));
+        if (!checkAllKeys) {
+          console.log(2.1);
+          throw "some element of Users is missing keys";
+        }
+      })
+    } else {
+      throw "Users is not array";
+    }
+
+  } catch (error) {
     window.localStorage.setItem("users", "[]")
   }
-  return users as string
+
+  return window.localStorage.getItem("users") as string
 }
 
 const toInit = (state: UsersState) => {
@@ -89,7 +115,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     createorUpdateUser: (state, action: PayloadAction<UsersState>) => {
-      let users = ishaveUsers()
+      let users = sanitizeUsers()
       users = window.localStorage.getItem("users") as string
       const usersObj = JSON.parse(users)
       const userIndex = usersObj.findIndex((user: UsersState) => user.id == state.id)
@@ -119,7 +145,7 @@ export const userSlice = createSlice({
       window.localStorage.setItem("users", JSON.stringify([...usersObj, resUser]))
     },
     getUserbyId: (state, action: PayloadAction<string>) => {
-      let users = ishaveUsers()
+      let users = sanitizeUsers()
       const usersObj = JSON.parse(users)
       const user = usersObj.find((user: UsersState) => user.id == action.payload)
 
@@ -136,7 +162,7 @@ export const userSlice = createSlice({
       state.expectedSalary = user.expectedSalary
     },
     setField: (state, action: PayloadAction<setfieldInterface>) => {
-      ishaveUsers()
+      sanitizeUsers()
       const { value, field }: setfieldInterface = action.payload
       state[field] = value
     },
@@ -144,7 +170,7 @@ export const userSlice = createSlice({
       toInit(state)
     },
     deleteUserbyId: (state, action: PayloadAction<string>) => {
-      let users = ishaveUsers()
+      let users = sanitizeUsers()
       const usersObj = JSON.parse(users)
       const userIndex = usersObj.findIndex((user: UsersState) => user.id == action.payload)
 
@@ -153,7 +179,7 @@ export const userSlice = createSlice({
       toInit(state)
     },
     deleteUserbyIds: (state, action: PayloadAction<React.Key[]>) => {
-      let users = ishaveUsers()
+      let users = sanitizeUsers()
       const usersObj = JSON.parse(users)
 
       action.payload.map((id) => {

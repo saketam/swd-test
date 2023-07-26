@@ -1,7 +1,7 @@
 import './style.scss'
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { UsersState, getUserbyId, deleteUserbyId, deleteUserbyIds } from "@features/userSlice"
+import { UsersState, getUserbyId, deleteUserbyId, deleteUserbyIds, sanitizeUsers } from "@features/userSlice"
 import { Button, Checkbox, Col, Row, Table } from "antd"
 import type { ColumnsType, TableProps } from 'antd/es/table'
 import { useState } from "react"
@@ -40,7 +40,10 @@ const ActionSection = (id: string) => {
 const TableSection = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
-  const users = JSON.parse(window.localStorage.getItem("users") as string)
+
+  const users = JSON.parse(sanitizeUsers())
+  
+
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
   const columns: ColumnsType<DataType> = [
