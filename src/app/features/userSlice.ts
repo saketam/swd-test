@@ -61,6 +61,29 @@ const ishaveUsers = () => {
   return users as string
 }
 
+const toInit = (state: UsersState) => {
+  state.id = ''
+  state.nameTitle = ''
+  state.name = ''
+  state.surname = ''
+  state.dateofBirth = ''
+  state.nationality = ''
+  state.personalId = {
+    one: '',
+    two: '',
+    three: '',
+    four: '',
+    five: '',
+  }
+  state.gender = ''
+  state.tel = {
+    code: '',
+    number: '',
+  }
+  state.passportId = ''
+  state.expectedSalary = ''
+}
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -118,26 +141,7 @@ export const userSlice = createSlice({
       state[field] = value
     },
     clearUser: (state) => {
-      state.id = ''
-      state.nameTitle = ''
-      state.name = ''
-      state.surname = ''
-      state.dateofBirth = ''
-      state.nationality = ''
-      state.personalId = {
-        one: '',
-        two: '',
-        three: '',
-        four: '',
-        five: '',
-      }
-      state.gender = ''
-      state.tel = {
-        code: '',
-        number: '',
-      }
-      state.passportId = ''
-      state.expectedSalary = ''
+      toInit(state)
     },
     deleteUserbyId: (state, action: PayloadAction<string>) => {
       let users = ishaveUsers()
@@ -146,27 +150,19 @@ export const userSlice = createSlice({
 
       usersObj.splice(userIndex, 1)
       window.localStorage.setItem("users", JSON.stringify(usersObj))
+      toInit(state)
+    },
+    deleteUserbyIds: (state, action: PayloadAction<React.Key[]>) => {
+      let users = ishaveUsers()
+      const usersObj = JSON.parse(users)
 
-      state.id = ''
-      state.nameTitle = ''
-      state.name = ''
-      state.surname = ''
-      state.dateofBirth = ''
-      state.nationality = ''
-      state.personalId = {
-        one: '',
-        two: '',
-        three: '',
-        four: '',
-        five: '',
-      }
-      state.gender = ''
-      state.tel = {
-        code: '',
-        number: '',
-      }
-      state.passportId = ''
-      state.expectedSalary = ''
+      action.payload.map((id) => {
+        const userIndex = usersObj.findIndex((user: UsersState) => user.id == id)
+        usersObj.splice(userIndex, 1)
+      })
+      window.localStorage.setItem("users", JSON.stringify(usersObj))
+
+      toInit(state)
     }
   }
 })
@@ -176,7 +172,8 @@ export const {
   getUserbyId,
   setField,
   clearUser,
-  deleteUserbyId
+  deleteUserbyId,
+  deleteUserbyIds
 } = userSlice.actions
 
 export default userSlice.reducer

@@ -56,7 +56,8 @@
       "gender": "Gender",
       "tel": "Tel",
       "nationality": "Nationality",
-      "action": "action"
+      "action": "Action",
+      "clear": "Delete Selected"
     }
   }
 }

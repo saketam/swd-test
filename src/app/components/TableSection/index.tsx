@@ -1,7 +1,7 @@
 import './style.scss'
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { UsersState, getUserbyId, deleteUserbyId } from "@features/userSlice"
+import { UsersState, getUserbyId, deleteUserbyId, deleteUserbyIds } from "@features/userSlice"
 import { Button, Checkbox, Col, Row, Table } from "antd"
 import type { ColumnsType, TableProps } from 'antd/es/table'
 import { useState } from "react"
@@ -38,7 +38,7 @@ const ActionSection = (id: string) => {
 }
 
 const TableSection = () => {
-
+  const dispatch = useDispatch()
   const { t } = useTranslation()
   const users = JSON.parse(window.localStorage.getItem("users") as string)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
@@ -77,7 +77,7 @@ const TableSection = () => {
   const data: DataType[] = []
   users?.map((user: UsersState, index: number) => {
     data.push({
-      key: index,
+      key: user.id,
       name: `${t(`option.nameTitle.${user.nameTitle}`)} ${user.name} ${user.surname}`,
       gender: t(`radio.${user.gender}`),
       tel: `${user.tel.code} ${user.tel.number}`,
@@ -87,14 +87,12 @@ const TableSection = () => {
   })
 
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log(newSelectedRowKeys)
-
     setSelectedRowKeys(newSelectedRowKeys)
   }
 
   const onCheckAll = (e: CheckboxChangeEvent) => {
     if (e.target.checked) {
-      setSelectedRowKeys(Array.from(Array(users.length).keys()))
+      setSelectedRowKeys(data?.map((datum) => datum.key))
     } else {
       setSelectedRowKeys([])
     }
@@ -105,14 +103,16 @@ const TableSection = () => {
     onChange: onSelectChange
   }
 
-  const handleClear = () => {
+  const handleClearSelected = () => {
+    if (selectedRowKeys == []) return
 
+    dispatch(deleteUserbyIds(selectedRowKeys))
+    setSelectedRowKeys([])
   }
 
   const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
     console.log('params', pagination, filters, sorter, extra);
   };
-
 
   return (
     <Row style={{ width: '100%' }} gutter={[0, 20]}>
@@ -122,8 +122,8 @@ const TableSection = () => {
             <Checkbox onChange={onCheckAll}>{t('checkAll')}</Checkbox>
           </Col>
           <Col span={2}>
-            <Button type="default" onClick={handleClear}>
-              {t('form.clear')}
+            <Button type="default" onClick={handleClearSelected}>
+              {t('table.clear')}
             </Button>
           </Col>
         </Row>
