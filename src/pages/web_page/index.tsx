@@ -27,6 +27,9 @@ const startShape = [
 const WebPage = () => {
   const { t } = useTranslation()
   const [shapes, setShapes] = useState(startShape)
+  const [swapGrid, setSwapGrid] = useState(true)
+
+  const swap = () => setSwapGrid(prev => !prev)
 
   const handleMoveShape = (direction: string) => () => {
     if (direction == 'left') {
@@ -42,11 +45,11 @@ const WebPage = () => {
         return [last, ...newShape]
       })
     } else if (direction == 'updown') {
-      // Move Position ให้สลับ Grid Layout ขึ้นลง  // sad :(
       return setShapes(prev => {
         const newShape = [...prev]
         const first = newShape.slice(0, 3)
         const last = newShape.slice(3, 6)
+        swap()
         return [...last, ...first]
       })
     } else if (direction == 'random') {
@@ -98,19 +101,42 @@ const WebPage = () => {
 
   const ResultSection = () => {
     return (
-      <Row gutter={[16, 16]} justify='center' id="row-result">
-        {
-          shapes.map((shape, index) => (
-            <Col span={8} key={index}>
-              <Row justify='center'>
-                <Button className="button" onClick={handleMoveShape('random')}>
-                  {shape()}
-                </Button>
-              </Row>
-            </Col>
-          ))
-        }
-      </Row>
+      <>
+        <Row gutter={[16, 16]} style={{ flexFlow: swapGrid ? "row wrap" : "row wrap-reverse" }}>
+          <Col span={24}>
+            <Row gutter={[16, 16]} >
+              <Col span={3}></Col>
+              {
+                shapes.slice(0, 3).map((shape, index) => (
+                  <Col span={7} key={index}>
+                    <Row justify='center'>
+                      <Button className="button" onClick={handleMoveShape('random')}>
+                        {shape()}
+                      </Button>
+                    </Row>
+                  </Col>
+                ))
+              }
+            </Row>
+          </Col>
+
+          <Col span={24}>
+            <Row gutter={[16, 16]}>
+              {
+                shapes.slice(3, 6).map((shape, index) => (
+                  <Col span={7} key={index}>
+                    <Row justify='center'>
+                      <Button className="button" onClick={handleMoveShape('random')}>
+                        {shape()}
+                      </Button>
+                    </Row>
+                  </Col>
+                ))
+              }
+            </Row>
+          </Col>
+        </Row>
+      </>
     )
   }
 
